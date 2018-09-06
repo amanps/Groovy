@@ -6,7 +6,10 @@ import com.amanps.groovy.util.API_KEY
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class DataManager @Inject constructor(val programService: ProgramService) {
+class DataManager @Inject constructor() {
+
+    @Inject
+    lateinit var programService: ProgramService
 
     fun fetchPopularPrograms(programType: String) : Observable<List<Program>> {
         return programService.getPopularPrograms(programType, API_KEY)

@@ -7,7 +7,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class HomePresenter @Inject constructor(val dataManager: DataManager) : BasePresenter<HomeView>() {
+class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
+
+    @Inject lateinit var dataManager: DataManager
 
     private var subscription: Disposable? = null
 
