@@ -3,6 +3,7 @@ package com.amanps.groovy.data.network
 import com.amanps.groovy.data.model.DiscoverApiResponse
 import com.amanps.groovy.util.BASE_URL
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -16,7 +17,7 @@ interface ProgramService {
     @GET("discover/{programType}?sort_by=popularity.desc")
     fun getPopularPrograms(
             @Path("programType") programType: String,
-            @Query("api_key") apiKey: String) : Observable<DiscoverApiResponse>
+            @Query("api_key") apiKey: String) : Single<DiscoverApiResponse>
 
     object Factory {
         fun buildService(): ProgramService {
