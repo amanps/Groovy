@@ -9,6 +9,8 @@ import javax.inject.Inject
 
 class HomeActivity : BaseActivity(), HomeView {
 
+    val TAG = "HomeActivity"
+
     @Inject
     lateinit var homePresenter: HomePresenter
 
@@ -18,10 +20,19 @@ class HomeActivity : BaseActivity(), HomeView {
         activityComponent().inject(this)
         homePresenter.attachView(this)
 
-        homePresenter.loadPopularPrograms()
+        homePresenter.buildHomePage()
     }
 
-    override fun displayPrograms(programs: List<Program>) {
-        Log.d("Aman", "Programs: $programs")
+    override fun displayPrograms(programs: List<List<Program>>) {
+        Log.d(TAG, "Programs: ${programs.map {
+            it.map {
+                it.title
+            }
+        }}")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homePresenter.detachView()
     }
 }

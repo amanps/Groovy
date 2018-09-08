@@ -5,6 +5,6 @@ import com.amanps.groovy.ui.base.BaseView
 
 interface HomeView : BaseView {
 
-    fun displayPrograms(programs: List<Program>)
+    fun displayPrograms(programs: List<List<Program>>)
 
 }
