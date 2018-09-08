@@ -5,6 +5,7 @@ import com.amanps.groovy.data.model.DiscoverApiResponse
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.data.network.ProgramService
 import com.amanps.groovy.util.API_KEY
+import com.amanps.groovy.util.Util
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -24,9 +25,12 @@ class DataManager @Inject constructor() {
                 .onErrorReturn {
                     Log.d(TAG, "Fetching popular $programType failed.")
                     DiscoverApiResponse.empty()
-                }
-                .map {
-                    it.results
+                }.map {
+                    it.results.map {
+                        it.apply {
+                            groovyProgramType = Util.getGroovyTypeFromProgramType(programType)
+                        }
+                    }
                 }
     }
 

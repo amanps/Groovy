@@ -7,3 +7,6 @@ val API_KEY = BuildConfig.API_KEY
 
 val MOVIE = "movie"
 val TV_SHOW = "tv"
+
+val TYPE_MOVIE = 98
+val TYPE_TV_SHOW = 99
