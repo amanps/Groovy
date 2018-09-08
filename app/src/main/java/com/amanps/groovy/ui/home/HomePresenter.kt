@@ -32,6 +32,7 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
                 }, {
                     Log.d(TAG, "Fetching home page data error. ")
                 })
+                .let { compositeDisposable?.add(it) }
     }
 
     private fun getHomePageDataSingle() : Single<List<List<Program>>> {

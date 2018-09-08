@@ -30,4 +30,9 @@ class HomeActivity : BaseActivity(), HomeView {
             }
         }}")
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homePresenter.detachView()
+    }
 }
