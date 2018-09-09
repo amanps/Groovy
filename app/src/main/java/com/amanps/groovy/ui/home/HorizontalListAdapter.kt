@@ -30,8 +30,8 @@ class HorizontalListAdapter(val context: Context, private val programs: List<Pro
         Glide.with(context)
                 .load(imageUrl)
                 .apply(RequestOptions()
-                        .placeholder(R.drawable.image_placeholder)
-                        .centerCrop())
+                        .centerCrop()
+                        .placeholder(R.drawable.image_placeholder))
                 .into(holder.itemView.program_image)
     }
 }

@@ -39,13 +39,19 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
                 HorizontalViewHolder(horizontalView, viewType)
             }
             else -> {
-                throw IllegalArgumentException("viewType in HomeAdapter is faulty.")
+                throw IllegalArgumentException("viewType in HomeAdapter#onCreateViewHolder is faulty.")
             }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        // nothing for this adapter. Binding is handled by the individual HorizontalListAdapters.
+        when (getItemViewType(position)) {
+            in HomePresenter.homePageHorizontalSectionTypes -> {
+                holder.itemView.textview_section_name.text =
+                        context.getString(HomePageViewTypes.getSectionNameResourceId(getItemViewType(position)))
+            }
+            else -> { throw IllegalArgumentException("viewType in HomeAdapter#onBindViewHolder is faulty.") }
+        }
     }
 
     override fun getItemCount(): Int {
