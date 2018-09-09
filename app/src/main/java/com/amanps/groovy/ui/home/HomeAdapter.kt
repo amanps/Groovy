@@ -25,7 +25,7 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
     inner class HorizontalViewHolder(view: View, viewType: Int) : RecyclerView.ViewHolder(view) {
         init {
             view.recyclerview_horizontal.apply {
-                adapter = HorizontalListAdapter(sectionedDataMap[viewType])
+                adapter = HorizontalListAdapter(this@HomeAdapter.context, sectionedDataMap[viewType])
                 layoutManager = LinearLayoutManager(this@HomeAdapter.context, LinearLayoutManager.HORIZONTAL, false)
             }
         }
