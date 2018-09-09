@@ -33,7 +33,7 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            HomePageViewTypes.POPULAR_MOVIES, HomePageViewTypes.POPULAR_TV_SHOWS -> {
+            in HomePresenter.homePageHorizontalSectionTypes -> {
                 val horizontalView = LayoutInflater.from(parent.context)
                         .inflate(R.layout.recyclerview_horizontal, parent, false)
                 HorizontalViewHolder(horizontalView, viewType)

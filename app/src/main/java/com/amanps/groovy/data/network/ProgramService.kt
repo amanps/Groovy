@@ -14,10 +14,33 @@ import retrofit2.http.Query
 
 interface ProgramService {
 
-    @GET("discover/{programType}?sort_by=popularity.desc")
+    @GET("discover/{programType}?sort_by=popularity.desc" +
+            "&language=en-US&include_adult=false&include_video=false")
     fun getPopularPrograms(
             @Path("programType") programType: String,
-            @Query("api_key") apiKey: String) : Single<DiscoverApiResponse>
+            @Query("api_key") apiKey: String
+    ) : Single<DiscoverApiResponse>
+
+    @GET("discover/{programType}?sort_by=vote_average.desc" +
+            "&language=en-US&include_adult=false&include_video=false")
+    fun getTopRatedPrograms(
+        @Path("programType") programType: String,
+        @Query("api_key") apiKey: String
+    ) : Single<DiscoverApiResponse>
+
+    @GET("discover/movie?sort_by=popularity.desc" +
+            "&language=en-US&include_adult=false&include_video=false")
+    fun getMoviesReleasedInYear(
+            @Query("primary_release_year") year: String,
+            @Query("api_key") apiKey: String
+    ) : Single<DiscoverApiResponse>
+
+    @GET("discover/tv?sort_by=popularity.desc&include_null_first_air_dates=false" +
+            "&language=en-US&include_adult=false&include_video=false")
+    fun getTvShowsReleasedInYear(
+            @Query("first_air_date_year") year: String,
+            @Query("api_key") apiKey: String
+    ) : Single<DiscoverApiResponse>
 
     object Factory {
         fun buildService(): ProgramService {

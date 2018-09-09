@@ -15,5 +15,7 @@ class HomePageViewTypes {
     companion object {
         const val POPULAR_MOVIES = 0
         const val POPULAR_TV_SHOWS = 1
+        const val MOVIES_RELEASED_THIS_YEAR = 2
+        const val TV_SHOWS_RELEASED_THIS_YEAR = 3
     }
 }
