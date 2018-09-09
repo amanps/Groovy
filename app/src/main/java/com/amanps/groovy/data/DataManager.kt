@@ -5,6 +5,8 @@ import com.amanps.groovy.data.model.DiscoverApiResponse
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.data.network.ProgramService
 import com.amanps.groovy.util.API_KEY
+import com.amanps.groovy.util.MOVIE
+import com.amanps.groovy.util.TV_SHOW
 import com.amanps.groovy.util.Util
 import io.reactivex.Single
 import javax.inject.Inject
@@ -25,13 +27,36 @@ class DataManager @Inject constructor() {
                 .onErrorReturn {
                     Log.d(TAG, "Fetching popular $programType failed.")
                     DiscoverApiResponse.empty()
-                }.map {
-                    it.results.map {
-                        it.apply {
-                            groovyProgramType = Util.getGroovyTypeFromProgramType(programType)
-                        }
-                    }
-                }
+                }.map { getTypeTaggedResults(it, programType) }
+    }
+
+    fun fetchTopRatedProgramsOfType(programType: String) : Single<List<Program>> {
+        return programService.getTopRatedPrograms(programType, API_KEY)
+                .onErrorReturn {
+                    Log.d(TAG, "Fetching top rated $programType failed.")
+                    DiscoverApiResponse.empty()
+                }.map { getTypeTaggedResults(it, programType) }
+    }
+
+    fun fetchProgramsReleasedInYear(programType: String, year: String) : Single<List<Program>> {
+        val programsSingle = when (programType) {
+            MOVIE -> programService.getMoviesReleasedInYear(year, API_KEY)
+            TV_SHOW -> programService.getTvShowsReleasedInYear(year, API_KEY)
+            else -> { throw IllegalArgumentException("Program type passed to fetchProgramsReleasedInYear is faulty.") }
+        }
+        return programsSingle
+                .onErrorReturn {
+                    Log.d(TAG, "Fetching program type $programType released in year $year failed.")
+                    DiscoverApiResponse.empty()
+                }.map { getTypeTaggedResults(it, programType) }
+    }
+
+    private fun getTypeTaggedResults(apiResponse: DiscoverApiResponse, programType: String) : List<Program> {
+        return apiResponse.results.map {
+            it.apply {
+                groovyProgramType = Util.getGroovyTypeFromProgramType(programType)
+            }
+        }
     }
 
 }

@@ -10,3 +10,12 @@ val TV_SHOW = "tv"
 
 val TYPE_MOVIE = 98
 val TYPE_TV_SHOW = 99
+
+class HomePageViewTypes {
+    companion object {
+        const val POPULAR_MOVIES = 0
+        const val POPULAR_TV_SHOWS = 1
+        const val MOVIES_RELEASED_THIS_YEAR = 2
+        const val TV_SHOWS_RELEASED_THIS_YEAR = 3
+    }
+}

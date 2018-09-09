@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Groovy</string>
+    <string name="section_popular_movies">Popular Movies</string>
+    <string name="section_popular_tv_shows">Popular TV Shows</string>
 </resources>
