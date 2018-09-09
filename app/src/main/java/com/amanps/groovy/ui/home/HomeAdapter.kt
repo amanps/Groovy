@@ -22,11 +22,12 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
             notifyDataSetChanged()
         }
 
-    inner class HorizontalViewHolder(view: View, viewType: Int) : RecyclerView.ViewHolder(view) {
+    class HorizontalViewHolder(context: Context, view: View, viewType: Int,
+                               sectionedDataMap: LinkedHashMap<Int, List<Program>>) : RecyclerView.ViewHolder(view) {
         init {
             view.recyclerview_horizontal.apply {
-                adapter = HorizontalListAdapter(this@HomeAdapter.context, sectionedDataMap[viewType])
-                layoutManager = LinearLayoutManager(this@HomeAdapter.context, LinearLayoutManager.HORIZONTAL, false)
+                adapter = HorizontalListAdapter(context, sectionedDataMap[viewType])
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             }
         }
     }
@@ -36,7 +37,7 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
             in HomePresenter.homePageHorizontalSectionTypes -> {
                 val horizontalView = LayoutInflater.from(parent.context)
                         .inflate(R.layout.recyclerview_horizontal, parent, false)
-                HorizontalViewHolder(horizontalView, viewType)
+                HorizontalViewHolder(context, horizontalView, viewType, sectionedDataMap)
             }
             else -> {
                 throw IllegalArgumentException("viewType in HomeAdapter#onCreateViewHolder is faulty.")
