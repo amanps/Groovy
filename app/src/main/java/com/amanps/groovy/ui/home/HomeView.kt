@@ -9,6 +9,6 @@ interface HomeView : BaseView {
      * Display a sectioned list of programs defined by an ordered map of
      * section type (HomePageViewType) mapped to a list of programs.
      */
-    fun displayPrograms(programs: LinkedHashMap<Int, List<Program>>)
+    fun displayPrograms(sectionedPrograms: LinkedHashMap<Int, List<Program>>)
 
 }
