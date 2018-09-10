@@ -7,6 +7,8 @@ import com.amanps.groovy.R
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BaseActivity
 import com.amanps.groovy.ui.detail.DetailActivity
+import com.amanps.groovy.util.EXTRA_PROGRAM_ID
+import com.amanps.groovy.util.EXTRA_PROGRAM_TYPE
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
 
@@ -38,6 +40,8 @@ class HomeActivity : BaseActivity(), HomeView {
 
     private fun handleProgramClicked(program: Program) {
         val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(EXTRA_PROGRAM_ID, program.id)
+        intent.putExtra(EXTRA_PROGRAM_TYPE, program.groovyProgramType)
         startActivity(intent)
     }
 

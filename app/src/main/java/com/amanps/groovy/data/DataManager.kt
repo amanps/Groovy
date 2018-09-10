@@ -25,7 +25,7 @@ class DataManager @Inject constructor() {
     fun fetchPopularProgramsOfType(programType: String) : Single<List<Program>> {
         return programService.getPopularPrograms(programType, API_KEY)
                 .onErrorReturn {
-                    Log.d(TAG, "Fetching popular $programType failed.")
+                    Log.e(TAG, "Fetching popular $programType failed.")
                     DiscoverApiResponse.empty()
                 }.map { getTypeTaggedResults(it, programType) }
     }
@@ -33,7 +33,7 @@ class DataManager @Inject constructor() {
     fun fetchTopRatedProgramsOfType(programType: String) : Single<List<Program>> {
         return programService.getTopRatedPrograms(programType, API_KEY)
                 .onErrorReturn {
-                    Log.d(TAG, "Fetching top rated $programType failed.")
+                    Log.e(TAG, "Fetching top rated $programType failed.")
                     DiscoverApiResponse.empty()
                 }.map { getTypeTaggedResults(it, programType) }
     }
@@ -46,7 +46,7 @@ class DataManager @Inject constructor() {
         }
         return programsSingle
                 .onErrorReturn {
-                    Log.d(TAG, "Fetching program type $programType released in year $year failed.")
+                    Log.e(TAG, "Fetching program type $programType released in year $year failed.")
                     DiscoverApiResponse.empty()
                 }.map { getTypeTaggedResults(it, programType) }
     }
@@ -57,6 +57,13 @@ class DataManager @Inject constructor() {
                 groovyProgramType = Util.getGroovyTypeFromProgramType(programType)
             }
         }
+    }
+
+    fun fetchProgramDetails(programId: Int, programType: String) : Single<Program> {
+        return programService.getProgramDetails(programType, programId, API_KEY)
+                .map {
+                    it.apply { groovyProgramType = Util.getGroovyTypeFromProgramType(programType) }
+                }
     }
 
 }

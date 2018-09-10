@@ -12,5 +12,16 @@ class Util {
                 }
             }
         }
+
+        fun getProgramTypeFromGroovyType(groovyProgramType: Int) : String {
+            return when (groovyProgramType) {
+                TYPE_MOVIE -> MOVIE
+                TYPE_TV_SHOW -> TV_SHOW
+                else -> {
+                    throw IllegalArgumentException("programType to getProgramTypeFromGroovyType" +
+                            "is faulty.")
+                }
+            }
+        }
     }
 }
