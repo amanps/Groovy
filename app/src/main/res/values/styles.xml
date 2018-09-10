@@ -6,10 +6,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="android:textColor">@color/white</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="expandingToolbarTitleColor" parent="@android:style/TextAppearance.Large">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="collapsingToolbarTitleColor" parent="@android:style/TextAppearance.Large">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

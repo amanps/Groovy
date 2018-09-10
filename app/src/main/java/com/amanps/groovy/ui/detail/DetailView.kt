@@ -7,6 +7,6 @@ interface DetailView : BaseView {
 
     fun displayProgramDetails(program: Program)
 
-    fun displayError(messageRedId: Int)
+    fun displayError(messageResId: Int)
 
 }

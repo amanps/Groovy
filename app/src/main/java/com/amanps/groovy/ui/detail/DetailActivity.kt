@@ -6,7 +6,14 @@ import com.amanps.groovy.R
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BaseActivity
 import com.amanps.groovy.util.EXTRA_PROGRAM_ID
+import com.amanps.groovy.util.EXTRA_PROGRAM_TITLE
 import com.amanps.groovy.util.EXTRA_PROGRAM_TYPE
+import com.amanps.groovy.util.NetworkUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.program_summary.*
+import kotlinx.android.synthetic.main.program_summary.view.*
 import javax.inject.Inject
 
 class DetailActivity : BaseActivity(), DetailView {
@@ -23,6 +30,9 @@ class DetailActivity : BaseActivity(), DetailView {
 
         val programId = intent.getIntExtra(EXTRA_PROGRAM_ID, -1)
         val programType = intent.getIntExtra(EXTRA_PROGRAM_TYPE, -1)
+        val programTitle = intent.getStringExtra(EXTRA_PROGRAM_TITLE)
+
+        setupToolbar(programTitle)
 
         if (programId == -1 || programType == -1) {
             throw Exception("Extras to DetailActivity are malformed.")
@@ -31,8 +41,26 @@ class DetailActivity : BaseActivity(), DetailView {
         detailPresenter.buildDetailsPage(programId, programType)
     }
 
+    private fun setupToolbar(programTitle: String) {
+        textview_program_title.text = programTitle
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        toolbar.setNavigationOnClickListener { onBackPressed() }
+    }
+
     override fun displayProgramDetails(program: Program) {
-        Log.d(TAG, "program to display: $program")
+        Glide.with(this)
+                .load(NetworkUtils.getPosterImageUrl(program.poster_path ?: ""))
+                .apply(RequestOptions()
+                        .placeholder(R.drawable.image_placeholder)
+                        .centerCrop())
+                .into(imageview_poster)
+
+        program_summary.summary.text = program.overview
+        program_summary.title.text = getString(R.string.summary_section_title)
+        program_summary.release_date.text = program.release_date ?: program.first_air_date
+        program_summary.genres.text = program.genres?.map { it.name }?.joinToString()
     }
 
     override fun displayError(messageResId: Int) {
