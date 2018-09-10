@@ -7,8 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.amanps.groovy.R
-import com.amanps.groovy.data.model.Program
-import com.amanps.groovy.util.HomePageViewTypes
+import com.amanps.groovy.util.VIEW_TYPE_HORIZONTAL_LIST
 import kotlinx.android.synthetic.main.recyclerview_horizontal.view.*
 
 class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -16,28 +15,22 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
     /**
      * Ordered map of HomePageViewTypes to list of programs.
      */
-    var sectionedDataMap = linkedMapOf<Int, List<Program>>()
+    var sections = listOf<HomeListSectionModel>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    class HorizontalViewHolder(context: Context, view: View, viewType: Int,
-                               sectionedDataMap: LinkedHashMap<Int, List<Program>>) : RecyclerView.ViewHolder(view) {
-        init {
-            view.recyclerview_horizontal.apply {
-                adapter = HorizontalListAdapter(context, sectionedDataMap[viewType])
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            }
-        }
-    }
+    private val recycledViewPool = RecyclerView.RecycledViewPool()
+
+    class HorizontalViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            in HomePresenter.homePageHorizontalSectionTypes -> {
+            VIEW_TYPE_HORIZONTAL_LIST -> {
                 val horizontalView = LayoutInflater.from(parent.context)
                         .inflate(R.layout.recyclerview_horizontal, parent, false)
-                HorizontalViewHolder(context, horizontalView, viewType, sectionedDataMap)
+                HorizontalViewHolder(horizontalView)
             }
             else -> {
                 throw IllegalArgumentException("viewType in HomeAdapter#onCreateViewHolder is faulty.")
@@ -47,19 +40,24 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            in HomePresenter.homePageHorizontalSectionTypes -> {
+            VIEW_TYPE_HORIZONTAL_LIST -> {
                 holder.itemView.textview_section_name.text =
-                        context.getString(HomePageViewTypes.getSectionNameResourceId(getItemViewType(position)))
+                        context.getString(sections[position].sectionNameResId)
+                holder.itemView.recyclerview_horizontal.apply {
+                    adapter = HorizontalRecyclerAdapter(context, sections[position])
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    setRecycledViewPool(this@HomeAdapter.recycledViewPool)
+                }
             }
             else -> { throw IllegalArgumentException("viewType in HomeAdapter#onBindViewHolder is faulty.") }
         }
     }
 
     override fun getItemCount(): Int {
-        return sectionedDataMap.size
+        return sections.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return sectionedDataMap.keys.elementAt(position)
+        return sections[position].type
     }
 }

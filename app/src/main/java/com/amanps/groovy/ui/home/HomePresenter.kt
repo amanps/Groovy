@@ -1,12 +1,13 @@
 package com.amanps.groovy.ui.home
 
 import android.util.Log
+import com.amanps.groovy.R
 import com.amanps.groovy.data.DataManager
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BasePresenter
-import com.amanps.groovy.util.HomePageViewTypes
 import com.amanps.groovy.util.MOVIE
 import com.amanps.groovy.util.TV_SHOW
+import com.amanps.groovy.util.VIEW_TYPE_HORIZONTAL_LIST
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function4
@@ -21,11 +22,11 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
     @Inject lateinit var dataManager: DataManager
 
     companion object {
-        val homePageHorizontalSectionTypes = arrayOf(
-                HomePageViewTypes.POPULAR_MOVIES,
-                HomePageViewTypes.POPULAR_TV_SHOWS,
-                HomePageViewTypes.MOVIES_RELEASED_THIS_YEAR,
-                HomePageViewTypes.TV_SHOWS_RELEASED_THIS_YEAR
+        val homePageHorizontalSections = arrayOf(
+                Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_popular_movies),
+                Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_popular_tv_shows),
+                Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_movies_released_this_year),
+                Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_tv_shows_released_this_year)
         )
     }
 
@@ -46,7 +47,7 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
                 .let { compositeDisposable?.add(it) }
     }
 
-    private fun getHomePageDataSingle() : Single<LinkedHashMap<Int, List<Program>>> {
+    private fun getHomePageDataSingle() : Single<List<HomeListSectionModel>> {
         val popularMoviesSingle = dataManager.fetchPopularProgramsOfType(MOVIE)
         val popularTvShowsSingle = dataManager.fetchPopularProgramsOfType(TV_SHOW)
         val moviesReleasedThisYearSingle = dataManager.fetchProgramsReleasedInYear(MOVIE,
@@ -56,7 +57,7 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
 
         return Single.zip(popularMoviesSingle, popularTvShowsSingle, moviesReleasedThisYearSingle, tvShowsReleasedThisYearSingle,
 
-                Function4<List<Program>, List<Program>, List<Program>, List<Program>, LinkedHashMap<Int, List<Program>>> {
+                Function4<List<Program>, List<Program>, List<Program>, List<Program>, List<HomeListSectionModel>> {
 
                     popularMovies, popularTvShows, moviesReleasedThisYear, tvShowsReleasedThisYear ->
                     getSectionedPrograms(listOf(popularMovies, popularTvShows, moviesReleasedThisYear, tvShowsReleasedThisYear))
@@ -64,14 +65,19 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
                 })
     }
 
-    private fun getSectionedPrograms(programs: List<List<Program>>) : LinkedHashMap<Int, List<Program>> {
-        if (programs.size != homePageHorizontalSectionTypes.size)
+    private fun getSectionedPrograms(programs: List<List<Program>>) : List<HomeListSectionModel> {
+        if (programs.size != homePageHorizontalSections.size)
             throw Exception("Not all home page section types have been defined in the HomePresenter.")
 
-        val map = LinkedHashMap<Int, List<Program>>()
+        val sectionsList = mutableListOf<HomeListSectionModel>()
+
         programs.forEachIndexed { index, programList ->
-            map[homePageHorizontalSectionTypes[index]] = programList
+            sectionsList.add(HomeListSectionModel(
+                    homePageHorizontalSections[index].first,
+                    homePageHorizontalSections[index].second,
+                    programList
+            ))
         }
-        return map
+        return sectionsList
     }
 }

@@ -30,8 +30,8 @@ class HomeActivity : BaseActivity(), HomeView {
         }
     }
 
-    override fun displayPrograms(sectionedPrograms: LinkedHashMap<Int, List<Program>>) {
-        (recyclerview_home.adapter as HomeAdapter).sectionedDataMap = sectionedPrograms
+    override fun displayPrograms(sectionedPrograms: List<HomeListSectionModel>) {
+        (recyclerview_home.adapter as HomeAdapter).sections = sectionedPrograms
     }
 
     override fun onDestroy() {

@@ -6,9 +6,8 @@ import com.amanps.groovy.ui.base.BaseView
 interface HomeView : BaseView {
 
     /**
-     * Display a sectioned list of programs defined by an ordered map of
-     * section type (HomePageViewType) mapped to a list of programs.
+     * Display a sectioned list of programs defined by list of HomeListSectionModel.
      */
-    fun displayPrograms(sectionedPrograms: LinkedHashMap<Int, List<Program>>)
+    fun displayPrograms(sectionedPrograms: List<HomeListSectionModel>)
 
 }
