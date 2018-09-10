@@ -12,7 +12,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.recyclerview_horizontal_item.view.*
 
-class HorizontalListAdapter(val context: Context, private val programs: List<Program>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HorizontalRecyclerAdapter(val context: Context,
+                                private val sectionData: HomeListSectionModel)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -22,11 +24,13 @@ class HorizontalListAdapter(val context: Context, private val programs: List<Pro
     }
 
     override fun getItemCount(): Int {
-        return programs?.size ?: 0
+        return sectionData.programs.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val imageUrl = NetworkUtils.getPosterImageUrl(programs?.get(position)?.poster_path ?: "")
+        val imageUrl = NetworkUtils.getPosterImageUrl(
+                sectionData.programs[position].poster_path ?: ""
+        )
         Glide.with(context)
                 .load(imageUrl)
                 .apply(RequestOptions()
