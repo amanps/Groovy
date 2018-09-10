@@ -1,6 +1,7 @@
 package com.amanps.groovy.di.component
 
 import com.amanps.groovy.di.ActivityScope
+import com.amanps.groovy.ui.detail.DetailActivity
 import com.amanps.groovy.ui.home.HomeActivity
 import dagger.Component
 
@@ -9,5 +10,6 @@ import dagger.Component
 interface ActivityComponent {
 
     fun inject(homeActivity: HomeActivity)
+    fun inject(detailActivity: DetailActivity)
 
 }

@@ -1,10 +1,12 @@
 package com.amanps.groovy.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.amanps.groovy.R
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BaseActivity
+import com.amanps.groovy.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
 
@@ -35,7 +37,8 @@ class HomeActivity : BaseActivity(), HomeView {
     }
 
     private fun handleProgramClicked(program: Program) {
-        // handle the click event.
+        val intent = Intent(this, DetailActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onDestroy() {
