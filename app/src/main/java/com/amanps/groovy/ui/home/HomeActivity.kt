@@ -26,12 +26,16 @@ class HomeActivity : BaseActivity(), HomeView {
     private fun setupView() {
         recyclerview_home.apply {
             layoutManager = LinearLayoutManager(this@HomeActivity)
-            adapter = HomeAdapter(this@HomeActivity)
+            adapter = HomeAdapter(this@HomeActivity, this@HomeActivity::handleProgramClicked)
         }
     }
 
     override fun displayPrograms(sectionedPrograms: List<HomeListSectionModel>) {
         (recyclerview_home.adapter as HomeAdapter).sections = sectionedPrograms
+    }
+
+    private fun handleProgramClicked(program: Program) {
+        // handle the click event.
     }
 
     override fun onDestroy() {

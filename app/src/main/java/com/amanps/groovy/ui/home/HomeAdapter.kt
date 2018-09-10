@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.amanps.groovy.R
+import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.util.VIEW_TYPE_HORIZONTAL_LIST
 import kotlinx.android.synthetic.main.recyclerview_horizontal.view.*
 
-class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeAdapter(val context: Context,
+                  val programClickListener: ((program: Program) -> Unit)) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     /**
      * Ordered map of HomePageViewTypes to list of programs.
@@ -44,7 +46,7 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
                 holder.itemView.textview_section_name.text =
                         context.getString(sections[position].sectionNameResId)
                 holder.itemView.recyclerview_horizontal.apply {
-                    adapter = HorizontalRecyclerAdapter(context, sections[position])
+                    adapter = HorizontalRecyclerAdapter(context, sections[position], this@HomeAdapter.programClickListener)
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     setRecycledViewPool(this@HomeAdapter.recycledViewPool)
                 }

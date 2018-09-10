@@ -13,7 +13,8 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.recyclerview_horizontal_item.view.*
 
 class HorizontalRecyclerAdapter(val context: Context,
-                                private val sectionData: HomeListSectionModel)
+                                private val sectionData: HomeListSectionModel,
+                                private val programClickListener: ((program: Program) -> Unit))
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -37,5 +38,9 @@ class HorizontalRecyclerAdapter(val context: Context,
                         .centerCrop()
                         .placeholder(R.drawable.image_placeholder))
                 .into(holder.itemView.program_image)
+
+        holder.itemView.setOnClickListener {
+            programClickListener.invoke(sectionData.programs[position])
+        }
     }
 }
