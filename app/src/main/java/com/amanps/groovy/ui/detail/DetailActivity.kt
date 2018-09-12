@@ -7,6 +7,7 @@ import com.amanps.groovy.R
 import com.amanps.groovy.data.model.CastModel
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BaseActivity
+import com.amanps.groovy.ui.common.HorizontalProgramRecyclerAdapter
 import com.amanps.groovy.util.EXTRA_PROGRAM_ID
 import com.amanps.groovy.util.EXTRA_PROGRAM_TITLE
 import com.amanps.groovy.util.EXTRA_PROGRAM_TYPE
@@ -16,7 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.program_summary.*
 import kotlinx.android.synthetic.main.program_summary.view.*
-import kotlinx.android.synthetic.main.recyclerview_horizontal_sectioned.*
+import kotlinx.android.synthetic.main.recyclerview_horizontal_sectioned.view.*
 import javax.inject.Inject
 
 class DetailActivity : BaseActivity(), DetailView {
@@ -43,7 +44,6 @@ class DetailActivity : BaseActivity(), DetailView {
         }
 
         detailPresenter.buildDetailsPage(programId, programType)
-        detailPresenter.buildCastSection(programId, programType)
     }
 
     private fun setupToolbar(programTitle: String) {
@@ -63,17 +63,35 @@ class DetailActivity : BaseActivity(), DetailView {
                 .into(imageview_poster)
 
         program_summary.summary.text = program.overview
-        program_summary.title.text = getString(R.string.summary_section_title)
+        program_summary.title.text = getString(R.string.section_summary)
         program_summary.release_date.text = program.release_date ?: program.first_air_date
         program_summary.genres.text = program.genres?.map { it.name }?.joinToString()
     }
 
     override fun displayCastSection(castList: List<CastModel>) {
-        recyclerview_horizontal.apply {
+        recyclerview_cast.recyclerview_horizontal.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = CastRecyclerAdapter(context, castList, this@DetailActivity::handleCastClicked)
         }
-        textview_section_name.text = getString(R.string.section_cast)
+        recyclerview_cast.textview_section_name.text = getString(R.string.section_cast)
+    }
+
+    override fun displayRecommendationsSection(recommendedPrograms: List<Program>) {
+        recyclerview_recommendations.recyclerview_horizontal.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = HorizontalProgramRecyclerAdapter(context, recommendedPrograms,
+                    this@DetailActivity::handleRecommendedProgramClicked, true)
+        }
+        recyclerview_recommendations.textview_section_name.text = getString(R.string.section_recommendations)
+    }
+
+    override fun displaySimilarProgramsSection(similarPrograms: List<Program>) {
+        recyclerview_similar.recyclerview_horizontal.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = HorizontalProgramRecyclerAdapter(context, similarPrograms,
+                    this@DetailActivity::handleSimilarProgramClicked, true)
+        }
+        recyclerview_similar.textview_section_name.text = getString(R.string.section_similar)
     }
 
     override fun displayError(messageResId: Int) {
@@ -82,5 +100,13 @@ class DetailActivity : BaseActivity(), DetailView {
 
     private fun handleCastClicked(cast: CastModel) {
         Log.d(TAG, "Cast clicked : $cast")
+    }
+
+    private fun handleRecommendedProgramClicked(program: Program) {
+        Log.d(TAG, "Recommended program clicked : $program")
+    }
+
+    private fun handleSimilarProgramClicked(program: Program) {
+        Log.d(TAG, "Similar program clicked : $program")
     }
 }

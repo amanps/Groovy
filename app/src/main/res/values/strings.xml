@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">Groovy</string>
+
     <string name="section_popular_movies">Popular Movies</string>
     <string name="section_popular_tv_shows">Popular TV Shows</string>
     <string name="section_movies_released_this_year">Movies Released This Year</string>
     <string name="section_tv_shows_released_this_year">TV Shows Released This Year</string>
-    <string name="error_program_unavailable">This program isn\'t available right now. </string>
-    <string name="summary_section_title">SUMMARY</string>
-    <string name="error_cast_unavailable">The cast isn\'t available right now. </string>
+    <string name="section_summary">SUMMARY</string>
     <string name="section_cast">CAST</string>
+    <string name="section_recommendations">RECOMMENDED</string>
+    <string name="section_similar">SIMILAR</string>
+
+    <string name="error_program_unavailable">This program isn\'t available right now. </string>
+    <string name="error_cast_unavailable">The cast isn\'t available right now. </string>
+    <string name="error_recommendations_unavailable">Recommendations aren\'t available right now. </string>
+    <string name="error_similar_programs_unavailable">Similar programs aren\'t available right now. </string>
 
 </resources>

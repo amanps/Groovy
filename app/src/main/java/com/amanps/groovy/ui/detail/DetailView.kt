@@ -12,4 +12,7 @@ interface DetailView : BaseView {
 
     fun displayCastSection(castList: List<CastModel>)
 
+    fun displayRecommendationsSection(recommendedPrograms: List<Program>)
+
+    fun displaySimilarProgramsSection(similarPrograms: List<Program>)
 }
