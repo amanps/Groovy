@@ -6,8 +6,8 @@
     <string name="section_movies_released_this_year">Movies Released This Year</string>
     <string name="section_tv_shows_released_this_year">TV Shows Released This Year</string>
     <string name="section_summary">SUMMARY</string>
-    <string name="section_cast">Cast</string>
-    <string name="section_recommendations">You might also like</string>
+    <string name="section_cast">CAST</string>
+    <string name="section_recommendations">RECOMMENDED</string>
 
     <string name="error_program_unavailable">This program isn\'t available right now. </string>
     <string name="error_cast_unavailable">The cast isn\'t available right now. </string>
