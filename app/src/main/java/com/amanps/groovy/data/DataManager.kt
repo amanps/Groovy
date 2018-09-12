@@ -1,6 +1,8 @@
 package com.amanps.groovy.data
 
 import android.util.Log
+import com.amanps.groovy.data.model.CastCrewResponseModel
+import com.amanps.groovy.data.model.CastModel
 import com.amanps.groovy.data.model.DiscoverApiResponse
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.data.network.ProgramService
@@ -63,6 +65,13 @@ class DataManager @Inject constructor() {
         return programService.getProgramDetails(programType, programId, API_KEY)
                 .map {
                     it.apply { groovyProgramType = Util.getGroovyTypeFromProgramType(programType) }
+                }
+    }
+
+    fun fetchCastForProgram(programType: String, programId: Int) : Single<List<CastModel>> {
+        return programService.getCastCrewForProgram(programType, programId, API_KEY)
+                .map {
+                    it.cast
                 }
     }
 

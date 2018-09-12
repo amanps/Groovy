@@ -24,4 +24,18 @@ class DetailPresenter @Inject constructor() : BasePresenter<DetailView>() {
                     view!!.displayError(R.string.error_program_unavailable)
                 })
     }
+
+    fun buildCastSection(programId: Int, groovyProgramType: Int) {
+        checkViewAttached()
+        val programType = Util.getProgramTypeFromGroovyType(groovyProgramType)
+        dataManager.fetchCastForProgram(programType, programId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    view!!.displayCastSection(it)
+                }, {
+                    view!!.displayError(R.string.error_cast_unavailable)
+                })
+    }
+
 }

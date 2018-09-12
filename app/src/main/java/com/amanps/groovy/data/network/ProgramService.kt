@@ -1,5 +1,6 @@
 package com.amanps.groovy.data.network
 
+import com.amanps.groovy.data.model.CastCrewResponseModel
 import com.amanps.groovy.data.model.DiscoverApiResponse
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.util.BASE_URL
@@ -49,6 +50,13 @@ interface ProgramService {
             @Path("id") id: Int,
             @Query("api_key") api_key: String
     ) : Single<Program>
+
+    @GET("{programType}/{id}/credits?language=en-US")
+    fun getCastCrewForProgram(
+            @Path("programType") programType: String,
+            @Path("id") id: Int,
+            @Query("api_key") apiKey: String
+    ) : Single<CastCrewResponseModel>
 
     object Factory {
         fun buildService(): ProgramService {

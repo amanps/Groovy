@@ -3,6 +3,7 @@ package com.amanps.groovy.ui.detail
 import android.os.Bundle
 import android.util.Log
 import com.amanps.groovy.R
+import com.amanps.groovy.data.model.CastModel
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BaseActivity
 import com.amanps.groovy.util.EXTRA_PROGRAM_ID
@@ -39,6 +40,7 @@ class DetailActivity : BaseActivity(), DetailView {
         }
 
         detailPresenter.buildDetailsPage(programId, programType)
+        detailPresenter.buildCastSection(programId, programType)
     }
 
     private fun setupToolbar(programTitle: String) {
@@ -61,6 +63,10 @@ class DetailActivity : BaseActivity(), DetailView {
         program_summary.title.text = getString(R.string.summary_section_title)
         program_summary.release_date.text = program.release_date ?: program.first_air_date
         program_summary.genres.text = program.genres?.map { it.name }?.joinToString()
+    }
+
+    override fun displayCastSection(castList: List<CastModel>) {
+        Log.d(TAG, "cast section: $castList")
     }
 
     override fun displayError(messageResId: Int) {

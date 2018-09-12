@@ -6,6 +6,6 @@
     <string name="section_tv_shows_released_this_year">TV Shows Released This Year</string>
     <string name="error_program_unavailable">This program isn\'t available right now. </string>
     <string name="summary_section_title">SUMMARY</string>
-
+    <string name="error_cast_unavailable">The cast isn\'t available right now. </string>
 
 </resources>
