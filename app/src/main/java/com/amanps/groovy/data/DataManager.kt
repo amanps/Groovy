@@ -80,4 +80,9 @@ class DataManager @Inject constructor() {
                 .map { getTypeTaggedResults(it, programType) }
     }
 
+    fun fetchSimilarPrograms(programType: String, programId: Int) : Single<List<Program>> {
+        return programService.getSimilarPrograms(programType, programId, API_KEY)
+                .map { getTypeTaggedResults(it, programType) }
+    }
+
 }

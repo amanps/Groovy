@@ -29,6 +29,7 @@ class DetailPresenter @Inject constructor() : BasePresenter<DetailView>() {
     private fun buildDetailSections(programId: Int, groovyProgramType: Int) {
         buildCastSection(programId, groovyProgramType)
         buildRecommendationsSection(programId, groovyProgramType)
+        buildSimilarProgramsSection(programId, groovyProgramType)
     }
 
     private fun buildCastSection(programId: Int, groovyProgramType: Int) {
@@ -54,6 +55,19 @@ class DetailPresenter @Inject constructor() : BasePresenter<DetailView>() {
                     view!!.displayRecommendationsSection(it)
                 }, {
                     view!!.displayError(R.string.error_recommendations_unavailable)
+                })
+    }
+
+    private fun buildSimilarProgramsSection(programId: Int, groovyProgramType: Int) {
+        checkViewAttached()
+        val programType = Util.getProgramTypeFromGroovyType(groovyProgramType)
+        dataManager.fetchSimilarPrograms(programType, programId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    view!!.displaySimilarProgramsSection(it)
+                }, {
+                    view!!.displayError(R.string.error_similar_programs_unavailable)
                 })
     }
 

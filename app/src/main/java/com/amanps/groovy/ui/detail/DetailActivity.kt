@@ -17,7 +17,6 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.program_summary.*
 import kotlinx.android.synthetic.main.program_summary.view.*
-import kotlinx.android.synthetic.main.recyclerview_horizontal_sectioned.*
 import kotlinx.android.synthetic.main.recyclerview_horizontal_sectioned.view.*
 import javax.inject.Inject
 
@@ -86,6 +85,15 @@ class DetailActivity : BaseActivity(), DetailView {
         recyclerview_recommendations.textview_section_name.text = getString(R.string.section_recommendations)
     }
 
+    override fun displaySimilarProgramsSection(similarPrograms: List<Program>) {
+        recyclerview_similar.recyclerview_horizontal.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = HorizontalProgramRecyclerAdapter(context, similarPrograms,
+                    this@DetailActivity::handleSimilarProgramClicked, true)
+        }
+        recyclerview_similar.textview_section_name.text = getString(R.string.section_similar)
+    }
+
     override fun displayError(messageResId: Int) {
         Log.d(TAG, getString(messageResId))
     }
@@ -96,5 +104,9 @@ class DetailActivity : BaseActivity(), DetailView {
 
     private fun handleRecommendedProgramClicked(program: Program) {
         Log.d(TAG, "Recommended program clicked : $program")
+    }
+
+    private fun handleSimilarProgramClicked(program: Program) {
+        Log.d(TAG, "Similar program clicked : $program")
     }
 }

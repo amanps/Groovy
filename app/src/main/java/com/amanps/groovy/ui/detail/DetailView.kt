@@ -14,4 +14,5 @@ interface DetailView : BaseView {
 
     fun displayRecommendationsSection(recommendedPrograms: List<Program>)
 
+    fun displaySimilarProgramsSection(similarPrograms: List<Program>)
 }

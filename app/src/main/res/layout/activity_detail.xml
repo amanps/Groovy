@@ -76,6 +76,13 @@
                 layout="@layout/recyclerview_horizontal_sectioned"/>
 
             <include
+                android:id="@+id/recyclerview_similar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                layout="@layout/recyclerview_horizontal_sectioned"/>
+
+            <include
                 android:id="@+id/recyclerview_recommendations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
