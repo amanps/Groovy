@@ -75,4 +75,9 @@ class DataManager @Inject constructor() {
                 }
     }
 
+    fun fetchRecommendationsForProgram(programType: String, programId: Int) : Single<List<Program>> {
+        return programService.getRecommendationsForProgram(programType, programId, API_KEY)
+                .map { getTypeTaggedResults(it, programType) }
+    }
+
 }

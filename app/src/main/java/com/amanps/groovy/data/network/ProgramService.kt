@@ -58,6 +58,13 @@ interface ProgramService {
             @Query("api_key") apiKey: String
     ) : Single<CastCrewResponseModel>
 
+    @GET("{programType}/{id}/recommendations?language=en-US")
+    fun getRecommendationsForProgram(
+            @Path("programType") programType: String,
+            @Path("id") id: Int,
+            @Query("api_key") apiKey: String
+    ) : Single<DiscoverApiResponse>
+
     object Factory {
         fun buildService(): ProgramService {
             val retrofit = Retrofit.Builder()
