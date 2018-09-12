@@ -1,5 +1,7 @@
 package com.amanps.groovy.ui.detail
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -80,7 +82,7 @@ class DetailActivity : BaseActivity(), DetailView {
         recyclerview_recommendations.recyclerview_horizontal.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = HorizontalProgramRecyclerAdapter(context, recommendedPrograms,
-                    this@DetailActivity::handleRecommendedProgramClicked, true)
+                    this@DetailActivity::handleProgramClicked, true)
         }
         recyclerview_recommendations.textview_section_name.text = getString(R.string.section_recommendations)
     }
@@ -89,7 +91,7 @@ class DetailActivity : BaseActivity(), DetailView {
         recyclerview_similar.recyclerview_horizontal.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = HorizontalProgramRecyclerAdapter(context, similarPrograms,
-                    this@DetailActivity::handleSimilarProgramClicked, true)
+                    this@DetailActivity::handleProgramClicked, true)
         }
         recyclerview_similar.textview_section_name.text = getString(R.string.section_similar)
     }
@@ -102,11 +104,16 @@ class DetailActivity : BaseActivity(), DetailView {
         Log.d(TAG, "Cast clicked : $cast")
     }
 
-    private fun handleRecommendedProgramClicked(program: Program) {
-        Log.d(TAG, "Recommended program clicked : $program")
+    private fun handleProgramClicked(program: Program) {
+        startActivity(DetailActivityIntent(program))
     }
 
-    private fun handleSimilarProgramClicked(program: Program) {
-        Log.d(TAG, "Similar program clicked : $program")
+}
+
+fun Context.DetailActivityIntent(program: Program): Intent {
+    return Intent(this, DetailActivity::class.java).apply {
+        putExtra(EXTRA_PROGRAM_ID, program.id)
+        putExtra(EXTRA_PROGRAM_TYPE, program.groovyProgramType)
+        putExtra(EXTRA_PROGRAM_TITLE, program.title ?: program.name)
     }
 }
