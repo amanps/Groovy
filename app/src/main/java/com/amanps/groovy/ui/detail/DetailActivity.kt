@@ -22,6 +22,7 @@ import javax.inject.Inject
 class DetailActivity : BaseActivity(), DetailView {
 
     val TAG = "DetailActivity"
+    val BACKDROP_IMAGE_SIZE = "w780"
 
     @Inject lateinit var detailPresenter: DetailPresenter
 
@@ -55,7 +56,7 @@ class DetailActivity : BaseActivity(), DetailView {
 
     override fun displayProgramDetails(program: Program) {
         Glide.with(this)
-                .load(NetworkUtils.getPosterImageUrl(program.poster_path ?: ""))
+                .load(NetworkUtils.getPosterImageUrl(program.backdrop_path ?: "", BACKDROP_IMAGE_SIZE))
                 .apply(RequestOptions()
                         .placeholder(R.drawable.image_placeholder)
                         .centerCrop())
