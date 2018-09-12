@@ -36,6 +36,6 @@
         android:gravity="center"
         android:maxLines="2"
         android:textSize="12sp"
-        tools:text="Morgan Freeman Singh Kumar" />
+        tools:text="Morgan Freeman Singh Kumar"/>
 
 </android.support.constraint.ConstraintLayout>

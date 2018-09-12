@@ -7,6 +7,7 @@ import com.amanps.groovy.R
 import com.amanps.groovy.data.model.CastModel
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BaseActivity
+import com.amanps.groovy.ui.common.HorizontalProgramRecyclerAdapter
 import com.amanps.groovy.util.EXTRA_PROGRAM_ID
 import com.amanps.groovy.util.EXTRA_PROGRAM_TITLE
 import com.amanps.groovy.util.EXTRA_PROGRAM_TYPE
@@ -79,8 +80,8 @@ class DetailActivity : BaseActivity(), DetailView {
     override fun displayRecommendationsSection(recommendedPrograms: List<Program>) {
         recyclerview_recommendations.recyclerview_horizontal.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = RecommendationsRecyclerAdapter(context, recommendedPrograms,
-                    this@DetailActivity::handleRecommendedProgramClicked)
+            adapter = HorizontalProgramRecyclerAdapter(context, recommendedPrograms,
+                    this@DetailActivity::handleRecommendedProgramClicked, true)
         }
         recyclerview_recommendations.textview_section_name.text = getString(R.string.section_recommendations)
     }

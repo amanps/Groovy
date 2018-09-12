@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.amanps.groovy.R
 import com.amanps.groovy.data.model.Program
+import com.amanps.groovy.ui.common.HorizontalProgramRecyclerAdapter
 import com.amanps.groovy.util.VIEW_TYPE_HORIZONTAL_LIST
 import kotlinx.android.synthetic.main.recyclerview_horizontal_sectioned.view.*
 
@@ -46,7 +47,8 @@ class HomeAdapter(val context: Context,
                 holder.itemView.textview_section_name.text =
                         context.getString(sections[position].sectionNameResId)
                 holder.itemView.recyclerview_horizontal.apply {
-                    adapter = HorizontalRecyclerAdapter(context, sections[position], this@HomeAdapter.programClickListener)
+                    adapter = HorizontalProgramRecyclerAdapter(context, sections[position].programs,
+                            this@HomeAdapter.programClickListener, false)
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     setRecycledViewPool(this@HomeAdapter.recycledViewPool)
                 }
