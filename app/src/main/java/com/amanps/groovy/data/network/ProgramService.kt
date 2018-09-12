@@ -1,6 +1,8 @@
 package com.amanps.groovy.data.network
 
+import com.amanps.groovy.data.model.CastCrewResponseModel
 import com.amanps.groovy.data.model.DiscoverApiResponse
+import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.util.BASE_URL
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -41,6 +43,20 @@ interface ProgramService {
             @Query("first_air_date_year") year: String,
             @Query("api_key") apiKey: String
     ) : Single<DiscoverApiResponse>
+
+    @GET("{programType}/{id}?language=en-US")
+    fun getProgramDetails(
+            @Path("programType") programType: String,
+            @Path("id") id: Int,
+            @Query("api_key") api_key: String
+    ) : Single<Program>
+
+    @GET("{programType}/{id}/credits?language=en-US")
+    fun getCastCrewForProgram(
+            @Path("programType") programType: String,
+            @Path("id") id: Int,
+            @Query("api_key") apiKey: String
+    ) : Single<CastCrewResponseModel>
 
     object Factory {
         fun buildService(): ProgramService {

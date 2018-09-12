@@ -42,7 +42,7 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
                 .subscribe({
                     view!!.displayPrograms(it)
                 }, {
-                    Log.d(TAG, "Fetching home page data error. ")
+                    Log.e(TAG, "Fetching home page data error. ")
                 })
                 .let { compositeDisposable?.add(it) }
     }

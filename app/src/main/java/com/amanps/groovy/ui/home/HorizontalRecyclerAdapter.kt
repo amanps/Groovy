@@ -10,17 +10,18 @@ import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.util.NetworkUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.recyclerview_horizontal_item.view.*
+import kotlinx.android.synthetic.main.item_image_card.view.*
 
 class HorizontalRecyclerAdapter(val context: Context,
-                                private val sectionData: HomeListSectionModel)
+                                private val sectionData: HomeListSectionModel,
+                                private val programClickListener: ((program: Program) -> Unit))
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context)
-                .inflate(R.layout.recyclerview_horizontal_item, parent, false))
+                .inflate(R.layout.item_image_card, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -37,5 +38,9 @@ class HorizontalRecyclerAdapter(val context: Context,
                         .centerCrop()
                         .placeholder(R.drawable.image_placeholder))
                 .into(holder.itemView.program_image)
+
+        holder.itemView.setOnClickListener {
+            programClickListener.invoke(sectionData.programs[position])
+        }
     }
 }
