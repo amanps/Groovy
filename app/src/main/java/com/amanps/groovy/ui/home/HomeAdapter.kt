@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.amanps.groovy.R
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.util.VIEW_TYPE_HORIZONTAL_LIST
-import kotlinx.android.synthetic.main.recyclerview_horizontal.view.*
+import kotlinx.android.synthetic.main.recyclerview_horizontal_sectioned.view.*
 
 class HomeAdapter(val context: Context,
                   val programClickListener: ((program: Program) -> Unit)) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -31,7 +31,7 @@ class HomeAdapter(val context: Context,
         return when (viewType) {
             VIEW_TYPE_HORIZONTAL_LIST -> {
                 val horizontalView = LayoutInflater.from(parent.context)
-                        .inflate(R.layout.recyclerview_horizontal, parent, false)
+                        .inflate(R.layout.recyclerview_horizontal_sectioned, parent, false)
                 HorizontalViewHolder(horizontalView)
             }
             else -> {

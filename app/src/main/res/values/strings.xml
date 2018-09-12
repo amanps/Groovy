@@ -7,5 +7,6 @@
     <string name="error_program_unavailable">This program isn\'t available right now. </string>
     <string name="summary_section_title">SUMMARY</string>
     <string name="error_cast_unavailable">The cast isn\'t available right now. </string>
+    <string name="section_cast">CAST</string>
 
 </resources>

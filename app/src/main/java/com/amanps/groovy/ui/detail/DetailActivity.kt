@@ -1,6 +1,7 @@
 package com.amanps.groovy.ui.detail
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.amanps.groovy.R
 import com.amanps.groovy.data.model.CastModel
@@ -15,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.program_summary.*
 import kotlinx.android.synthetic.main.program_summary.view.*
+import kotlinx.android.synthetic.main.recyclerview_horizontal_sectioned.*
 import javax.inject.Inject
 
 class DetailActivity : BaseActivity(), DetailView {
@@ -66,10 +68,18 @@ class DetailActivity : BaseActivity(), DetailView {
     }
 
     override fun displayCastSection(castList: List<CastModel>) {
-        Log.d(TAG, "cast section: $castList")
+        recyclerview_horizontal.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = CastRecyclerAdapter(context, castList, this@DetailActivity::handleCastClicked)
+        }
+        textview_section_name.text = getString(R.string.section_cast)
     }
 
     override fun displayError(messageResId: Int) {
         Log.d(TAG, getString(messageResId))
+    }
+
+    private fun handleCastClicked(cast: CastModel) {
+        Log.d(TAG, "Cast clicked : $cast")
     }
 }
