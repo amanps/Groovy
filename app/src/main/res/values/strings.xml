@@ -14,4 +14,9 @@
     <string name="error_recommendations_unavailable">Recommendations aren\'t available right now. </string>
     <string name="error_similar_programs_unavailable">Similar programs aren\'t available right now. </string>
 
+    <string name="program_rating">%1$s / 10</string>
+    <string name="program_release_date">%1$s on %2$s</string>
+    <string name="releasing">Releasing</string>
+    <string name="released">Released</string>
+
 </resources>
