@@ -5,9 +5,9 @@
     <string name="section_popular_tv_shows">Popular TV Shows</string>
     <string name="section_upcoming_movies">Releasing Soon</string>
     <string name="section_movies_in_theatres">In Theatres Now</string>
-    <string name="section_cast">Cast</string>
-    <string name="section_recommendations">Recommended</string>
-    <string name="section_similar">Similar</string>
+    <string name="section_cast">Starring</string>
+    <string name="section_recommendations">You Might Also Like</string>
+    <string name="section_similar" formatted="true">Similar %1$s </string>
 
     <string name="error_program_unavailable">This program isn\'t available right now. </string>
     <string name="error_cast_unavailable">The cast isn\'t available right now. </string>

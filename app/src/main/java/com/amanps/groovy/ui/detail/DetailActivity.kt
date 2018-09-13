@@ -11,10 +11,7 @@ import com.amanps.groovy.data.model.CastModel
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BaseActivity
 import com.amanps.groovy.ui.common.HorizontalProgramRecyclerAdapter
-import com.amanps.groovy.util.EXTRA_PROGRAM_ID
-import com.amanps.groovy.util.EXTRA_PROGRAM_TITLE
-import com.amanps.groovy.util.EXTRA_PROGRAM_TYPE
-import com.amanps.groovy.util.NetworkUtils
+import com.amanps.groovy.util.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -25,8 +22,9 @@ import javax.inject.Inject
 
 class DetailActivity : BaseActivity(), DetailView {
 
-    val TAG = "DetailActivity"
-    val BACKDROP_IMAGE_SIZE = "w780"
+    private val TAG = "DetailActivity"
+    private val BACKDROP_IMAGE_SIZE = "w780"
+    private var programType: Int = -1
 
     @Inject lateinit var detailPresenter: DetailPresenter
 
@@ -37,7 +35,7 @@ class DetailActivity : BaseActivity(), DetailView {
         detailPresenter.attachView(this)
 
         val programId = intent.getIntExtra(EXTRA_PROGRAM_ID, -1)
-        val programType = intent.getIntExtra(EXTRA_PROGRAM_TYPE, -1)
+        programType = intent.getIntExtra(EXTRA_PROGRAM_TYPE, -1)
         val programTitle = intent.getStringExtra(EXTRA_PROGRAM_TITLE)
 
         setupToolbar(programTitle)
@@ -105,7 +103,7 @@ class DetailActivity : BaseActivity(), DetailView {
             adapter = HorizontalProgramRecyclerAdapter(context, similarPrograms,
                     this@DetailActivity::handleProgramClicked, true)
         }
-        recyclerview_similar.textview_section_name.text = getString(R.string.section_similar)
+        recyclerview_similar.textview_section_name.text = getString(R.string.section_similar, Util.getProgramTypeName(programType))
     }
 
     override fun displayError(messageResId: Int) {
