@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
 import com.amanps.groovy.R
 import com.amanps.groovy.data.model.CastModel
 import com.amanps.groovy.data.model.Program
@@ -71,6 +72,10 @@ class DetailActivity : BaseActivity(), DetailView {
     }
 
     override fun displayCastSection(castList: List<CastModel>) {
+        if (castList.isEmpty()) {
+            recyclerview_cast.visibility = View.GONE
+            return
+        }
         recyclerview_cast.recyclerview_horizontal.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = CastRecyclerAdapter(context, castList, this@DetailActivity::handleCastClicked)
@@ -79,6 +84,10 @@ class DetailActivity : BaseActivity(), DetailView {
     }
 
     override fun displayRecommendationsSection(recommendedPrograms: List<Program>) {
+        if (recommendedPrograms.isEmpty()) {
+            recyclerview_recommendations.visibility = View.GONE
+            return
+        }
         recyclerview_recommendations.recyclerview_horizontal.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = HorizontalProgramRecyclerAdapter(context, recommendedPrograms,
@@ -88,6 +97,10 @@ class DetailActivity : BaseActivity(), DetailView {
     }
 
     override fun displaySimilarProgramsSection(similarPrograms: List<Program>) {
+        if (similarPrograms.isEmpty()) {
+            recyclerview_similar.visibility = View.GONE
+            return
+        }
         recyclerview_similar.recyclerview_horizontal.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = HorizontalProgramRecyclerAdapter(context, similarPrograms,
