@@ -3,12 +3,11 @@
 
     <string name="section_popular_movies">Popular Movies</string>
     <string name="section_popular_tv_shows">Popular TV Shows</string>
-    <string name="section_movies_released_this_year">Movies Released This Year</string>
-    <string name="section_tv_shows_released_this_year">TV Shows Released This Year</string>
-    <string name="section_summary">SUMMARY</string>
-    <string name="section_cast">CAST</string>
-    <string name="section_recommendations">RECOMMENDED</string>
-    <string name="section_similar">SIMILAR</string>
+    <string name="section_upcoming_movies">Releasing Soon</string>
+    <string name="section_movies_in_theatres">In Theatres Now</string>
+    <string name="section_cast">Starring</string>
+    <string name="section_recommendations">You Might Also Like</string>
+    <string name="section_similar" formatted="true">Similar %1$s </string>
 
     <string name="error_program_unavailable">This program isn\'t available right now. </string>
     <string name="error_cast_unavailable">The cast isn\'t available right now. </string>

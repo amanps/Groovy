@@ -10,6 +10,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:textViewStyle">@style/MontserratFontStyle</item>
     </style>
 
     <style name="expandingToolbarTitleColor" parent="@android:style/TextAppearance.Large">
@@ -20,6 +21,10 @@
     <style name="collapsingToolbarTitleColor" parent="@android:style/TextAppearance.Large">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="MontserratFontStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
 </resources>
