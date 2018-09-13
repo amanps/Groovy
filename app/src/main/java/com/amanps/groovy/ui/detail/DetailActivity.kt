@@ -66,7 +66,6 @@ class DetailActivity : BaseActivity(), DetailView {
                 .into(imageview_poster)
 
         program_summary.summary.text = program.overview
-        program_summary.title.text = getString(R.string.section_summary)
         program_summary.release_date.text = program.release_date ?: program.first_air_date
         program_summary.genres.text = program.genres?.map { it.name }?.joinToString()
     }
