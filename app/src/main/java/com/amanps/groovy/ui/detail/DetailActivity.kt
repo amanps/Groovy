@@ -64,8 +64,22 @@ class DetailActivity : BaseActivity(), DetailView {
                 .into(imageview_poster)
 
         program_summary.summary.text = program.overview
-        program_summary.release_date.text = program.release_date ?: program.first_air_date
+
+        val releaseDate = program.release_date ?: program.first_air_date
+        if (releaseDate.isNullOrBlank()) {
+            program_summary.release_date.visibility = View.GONE
+        } else {
+            program_summary.release_date.text = getString(R.string.program_release_date,
+                    getString(Util.getReleaseTextResId(releaseDate!!)), Util.getPrettyReleaseDate(releaseDate))
+        }
+
         program_summary.genres.text = program.genres?.map { it.name }?.joinToString()
+
+        if (program.vote_average?.compareTo(0.0) == 0) {
+            program_summary.layout_rating.visibility = View.GONE
+        } else {
+            program_summary.rating.text = getString(R.string.program_rating, program.vote_average.toString())
+        }
     }
 
     override fun displayCastSection(castList: List<CastModel>) {

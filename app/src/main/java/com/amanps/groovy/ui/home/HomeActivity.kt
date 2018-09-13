@@ -2,6 +2,7 @@ package com.amanps.groovy.ui.home
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import com.amanps.groovy.R
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BaseActivity
@@ -31,8 +32,11 @@ class HomeActivity : BaseActivity(), HomeView {
         }
     }
 
-    override fun displayPrograms(sectionedPrograms: List<HomeListSectionModel>) {
-        (recyclerview_home.adapter as HomeAdapter).sections = sectionedPrograms
+    override fun displayHomePageSections(sectionedPrograms: List<HomeListSectionModel>) {
+        (recyclerview_home.adapter as HomeAdapter).apply {
+            sections = sectionedPrograms.toMutableList()
+            notifyDataSetChanged()
+        }
     }
 
     private fun handleProgramClicked(program: Program) {

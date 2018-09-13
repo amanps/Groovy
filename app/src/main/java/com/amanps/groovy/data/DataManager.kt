@@ -103,4 +103,12 @@ class DataManager @Inject constructor() {
                 .map { getTypeTaggedResults(it, MOVIE) }
     }
 
+    fun fetchTrendingPrograms(programType: String) : Single<List<Program>> {
+        return programService.getTrendingMediaType(programType, apiKey = API_KEY)
+                .onErrorReturn {
+                    Log.e(TAG, "Fetching trending $programType failed.")
+                    DiscoverApiResponse.empty()
+                }.map { getTypeTaggedResults(it, programType) }
+    }
+
 }

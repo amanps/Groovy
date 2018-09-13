@@ -8,6 +8,6 @@ interface HomeView : BaseView {
     /**
      * Display a sectioned list of programs defined by list of HomeListSectionModel.
      */
-    fun displayPrograms(sectionedPrograms: List<HomeListSectionModel>)
+    fun displayHomePageSections(sectionedPrograms: List<HomeListSectionModel>)
 
 }
