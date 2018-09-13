@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import com.amanps.groovy.R
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.common.HorizontalProgramRecyclerAdapter
+import com.amanps.groovy.util.VIEW_TYPE_BANNER_VIEW_PAGER
 import com.amanps.groovy.util.VIEW_TYPE_HORIZONTAL_LIST
 import kotlinx.android.synthetic.main.recyclerview_horizontal_sectioned.view.*
+import kotlinx.android.synthetic.main.viewpager_banner.view.*
 
 class HomeAdapter(val context: Context,
                   val programClickListener: ((program: Program) -> Unit)) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -18,22 +20,23 @@ class HomeAdapter(val context: Context,
     /**
      * Ordered map of HomePageViewTypes to list of programs.
      */
-    var sections = listOf<HomeListSectionModel>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    var sections = mutableListOf<HomeListSectionModel>()
 
     private val recycledViewPool = RecyclerView.RecycledViewPool()
 
-    class HorizontalViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_HORIZONTAL_LIST -> {
                 val horizontalView = LayoutInflater.from(parent.context)
                         .inflate(R.layout.recyclerview_horizontal_sectioned, parent, false)
-                HorizontalViewHolder(horizontalView)
+                ViewHolder(horizontalView)
+            }
+            VIEW_TYPE_BANNER_VIEW_PAGER -> {
+                val viewPager = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.viewpager_banner, parent, false)
+                ViewHolder(viewPager)
             }
             else -> {
                 throw IllegalArgumentException("viewType in HomeAdapter#onCreateViewHolder is faulty.")
@@ -52,6 +55,9 @@ class HomeAdapter(val context: Context,
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     setRecycledViewPool(this@HomeAdapter.recycledViewPool)
                 }
+            }
+            VIEW_TYPE_BANNER_VIEW_PAGER -> {
+                holder.itemView.viewpager_banner.adapter = BannerPagerAdapter(context, sections[position].programs)
             }
             else -> { throw IllegalArgumentException("viewType in HomeAdapter#onBindViewHolder is faulty.") }
         }

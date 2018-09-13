@@ -5,14 +5,11 @@ import com.amanps.groovy.R
 import com.amanps.groovy.data.DataManager
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BasePresenter
-import com.amanps.groovy.util.MOVIE
-import com.amanps.groovy.util.NetworkUtils
-import com.amanps.groovy.util.TV_SHOW
-import com.amanps.groovy.util.VIEW_TYPE_HORIZONTAL_LIST
+import com.amanps.groovy.util.*
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Function4
+import io.reactivex.functions.Function5
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -27,6 +24,7 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
 
     companion object {
         val homePageHorizontalSections = arrayOf(
+                Pair(VIEW_TYPE_BANNER_VIEW_PAGER, -1),
                 Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_popular_movies),
                 Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_popular_tv_shows),
                 Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_movies_in_theatres),
@@ -36,16 +34,15 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
 
     /**
      * Fetches lists of programs to be displayed in the home page UI
-     * and calls view.displayPrograms() with the received data.
+     * and calls view.displayHomePageSections() with the received data.
      */
     fun buildHomePage() {
         checkViewAttached()
-        buildHomePageBanner()
         getHomePageDataSingle()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    view!!.displayPrograms(it)
+                    view!!.displayHomePageSections(it)
                 }, {
                     Log.e(TAG, "Fetching home page data error.")
                 })
@@ -57,13 +54,19 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
         val popularTvShowsSingle = dataManager.fetchPopularProgramsOfType(TV_SHOW)
         val upcomingMoviesSingle = dataManager.fetchUpcomingMovies()
         val moviesInTheatresSingle = dataManager.fetchMoviesInTheatres()
+        val bannerProgramsSingle = getBannerProgramsSingle()
 
-        return Single.zip(popularMoviesSingle, popularTvShowsSingle, moviesInTheatresSingle, upcomingMoviesSingle,
+        return Single.zip(popularMoviesSingle, popularTvShowsSingle, moviesInTheatresSingle,
+                upcomingMoviesSingle, bannerProgramsSingle,
 
-                Function4<List<Program>, List<Program>, List<Program>, List<Program>, List<HomeListSectionModel>> {
+                Function5<List<Program>, List<Program>, List<Program>, List<Program>, List<Program>, List<HomeListSectionModel>> {
 
-                    popularMovies, popularTvShows, moviesInTheatres, upcomingMovies ->
-                    getSectionedPrograms(listOf(popularMovies, popularTvShows, moviesInTheatres, upcomingMovies))
+                    popularMovies, popularTvShows, moviesInTheatres, upcomingMovies, bannerPrograms ->
+                    getSectionedPrograms(listOf(bannerPrograms,
+                            popularMovies,
+                            popularTvShows,
+                            moviesInTheatres,
+                            upcomingMovies))
 
                 })
     }
@@ -84,23 +87,15 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
         return sectionsList
     }
 
-    private fun buildHomePageBanner() {
+    private fun getBannerProgramsSingle() : Single<List<Program>> {
         val trendingMoviesSingle = dataManager.fetchTrendingPrograms(MOVIE)
         val trendingTvShowsSingle = dataManager.fetchTrendingPrograms(TV_SHOW)
 
-        val zippedSingle =  Single.zip(trendingMoviesSingle, trendingTvShowsSingle,
+        return Single.zip(trendingMoviesSingle, trendingTvShowsSingle,
                 BiFunction<List<Program>, List<Program>, List<Program>> { trendingMovies, trendingTvShows ->
-            trendingMovies + trendingTvShows
+            trendingMovies.zip(trendingTvShows).flatMap {
+                listOf(it.first, it.second)
+            }.take(NUMBER_OF_BANNER_IMAGES)
         })
-
-        zippedSingle.observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    view!!.displayBannerImages(it.mapNotNull {
-                        NetworkUtils.getPosterImageUrl(it.backdrop_path ?: "", BANNER_IMAGE_SIZE)
-                    }.take(NUMBER_OF_BANNER_IMAGES))
-                }, {
-                    Log.e(TAG, "Fetching trending banner images error.")
-                })
     }
 }

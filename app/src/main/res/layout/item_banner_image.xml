@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/imageview_banner"
     android:layout_width="wrap_content"
-    android:layout_height="300dp"
-    android:scaleType="fitCenter"
+    android:layout_height="320dp"
+    android:scaleType="fitStart"
     tools:src="@drawable/test_profile">
 
-</ImageView>
+    <ImageView
+        android:id="@+id/imageview_banner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:src="@drawable/test_profile"
+        android:scaleType="fitCenter"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        android:layout_gravity="bottom"/>
+
+    <TextView
+        android:id="@+id/textview_program_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:textAllCaps="true"
+        android:maxLines="2"
+        android:ellipsize="end"
+        tools:text="Shawshank Redemption FORREST GUMP DARK KNIGHT"/>
+
+</FrameLayout>
