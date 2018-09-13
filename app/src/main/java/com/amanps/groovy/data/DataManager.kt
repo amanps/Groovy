@@ -85,4 +85,22 @@ class DataManager @Inject constructor() {
                 .map { getTypeTaggedResults(it, programType) }
     }
 
+    fun fetchUpcomingMovies(): Single<List<Program>> {
+        return programService.getUpcomingMovies(API_KEY)
+                .onErrorReturn {
+                    Log.e(TAG, "Fetching upcoming movies failed.")
+                    DiscoverApiResponse.empty()
+                }
+                .map { getTypeTaggedResults(it, MOVIE) }
+    }
+
+    fun fetchMoviesInTheatres(): Single<List<Program>> {
+        return programService.getNowPlayingMovies(API_KEY)
+                .onErrorReturn {
+                    Log.e(TAG, "Fetching movies in theatres failed.")
+                    DiscoverApiResponse.empty()
+                }
+                .map { getTypeTaggedResults(it, MOVIE) }
+    }
+
 }

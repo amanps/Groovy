@@ -72,6 +72,16 @@ interface ProgramService {
             @Query("api_key") apiKey: String
     ) : Single<DiscoverApiResponse>
 
+    @GET("movie/upcoming?language=en-US&region=US")
+    fun getUpcomingMovies(
+            @Query("api_key") apiKey: String
+    ) : Single<DiscoverApiResponse>
+
+    @GET("movie/now_playing?language=en-US&region=US")
+    fun getNowPlayingMovies(
+            @Query("api_key") apiKey: String
+    ) : Single<DiscoverApiResponse>
+
     object Factory {
         fun buildService(): ProgramService {
             val retrofit = Retrofit.Builder()

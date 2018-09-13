@@ -12,7 +12,6 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function4
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 import javax.inject.Inject
 
 class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
@@ -25,8 +24,8 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
         val homePageHorizontalSections = arrayOf(
                 Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_popular_movies),
                 Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_popular_tv_shows),
-                Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_movies_released_this_year),
-                Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_tv_shows_released_this_year)
+                Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_movies_in_theatres),
+                Pair(VIEW_TYPE_HORIZONTAL_LIST, R.string.section_upcoming_movies)
         )
     }
 
@@ -50,17 +49,15 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
     private fun getHomePageDataSingle() : Single<List<HomeListSectionModel>> {
         val popularMoviesSingle = dataManager.fetchPopularProgramsOfType(MOVIE)
         val popularTvShowsSingle = dataManager.fetchPopularProgramsOfType(TV_SHOW)
-        val moviesReleasedThisYearSingle = dataManager.fetchProgramsReleasedInYear(MOVIE,
-                Calendar.getInstance().get(Calendar.YEAR).toString())
-        val tvShowsReleasedThisYearSingle = dataManager.fetchProgramsReleasedInYear(TV_SHOW,
-                Calendar.getInstance().get(Calendar.YEAR).toString())
+        val upcomingMoviesSingle = dataManager.fetchUpcomingMovies()
+        val moviesInTheatresSingle = dataManager.fetchMoviesInTheatres()
 
-        return Single.zip(popularMoviesSingle, popularTvShowsSingle, moviesReleasedThisYearSingle, tvShowsReleasedThisYearSingle,
+        return Single.zip(popularMoviesSingle, popularTvShowsSingle, moviesInTheatresSingle, upcomingMoviesSingle,
 
                 Function4<List<Program>, List<Program>, List<Program>, List<Program>, List<HomeListSectionModel>> {
 
-                    popularMovies, popularTvShows, moviesReleasedThisYear, tvShowsReleasedThisYear ->
-                    getSectionedPrograms(listOf(popularMovies, popularTvShows, moviesReleasedThisYear, tvShowsReleasedThisYear))
+                    popularMovies, popularTvShows, moviesInTheatres, upcomingMovies ->
+                    getSectionedPrograms(listOf(popularMovies, popularTvShows, moviesInTheatres, upcomingMovies))
 
                 })
     }

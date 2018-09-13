@@ -3,8 +3,8 @@
 
     <string name="section_popular_movies">Popular Movies</string>
     <string name="section_popular_tv_shows">Popular TV Shows</string>
-    <string name="section_movies_released_this_year">Movies Released This Year</string>
-    <string name="section_tv_shows_released_this_year">TV Shows Released This Year</string>
+    <string name="section_upcoming_movies">Releasing Soon</string>
+    <string name="section_movies_in_theatres">In Theatres Now</string>
     <string name="section_cast">Cast</string>
     <string name="section_recommendations">Recommended</string>
     <string name="section_similar">Similar</string>
