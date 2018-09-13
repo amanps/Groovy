@@ -82,6 +82,13 @@ interface ProgramService {
             @Query("api_key") apiKey: String
     ) : Single<DiscoverApiResponse>
 
+    @GET("trending/{media_type}/{time_window}")
+    fun getTrendingMediaType(
+            @Path("media_type") mediaType: String,
+            @Path("time_window") timeWindow: String = "week",
+            @Query("api_key") apiKey: String
+    ) : Single<DiscoverApiResponse>
+
     object Factory {
         fun buildService(): ProgramService {
             val retrofit = Retrofit.Builder()

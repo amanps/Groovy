@@ -10,4 +10,6 @@ interface HomeView : BaseView {
      */
     fun displayPrograms(sectionedPrograms: List<HomeListSectionModel>)
 
+    fun displayBannerImages(bannerUrls: List<String>)
+
 }
