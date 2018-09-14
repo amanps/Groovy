@@ -6,8 +6,8 @@ An Android application for discovery of Movies and TV Shows built using the TMDB
 * Built purely in Kotlin
 * Built using the MVP architecture with Dagger, Rx and several key Android libraries / APIs. 
 
-<img src="https://github.com/amanps/Groovy/blob/master/images/Screenshot1.png" width="360"> <img src="https://github.com/amanps/Groovy/blob/master/images/Screenshot2.png" width="360">
-<img src="https://github.com/amanps/Groovy/blob/master/images/Screenshot3.png" width="360"> <img src="https://github.com/amanps/Groovy/blob/master/images/Screenshot4.png" width="360">
+<img src="https://github.com/amanps/Groovy/blob/master/images/Screenshot1.png" width="300"> <img src="https://github.com/amanps/Groovy/blob/master/images/Screenshot2.png" width="300">
+<img src="https://github.com/amanps/Groovy/blob/master/images/Screenshot3.png" width="300"> <img src="https://github.com/amanps/Groovy/blob/master/images/Screenshot4.png" width="300">
 
 Application structure:
 
