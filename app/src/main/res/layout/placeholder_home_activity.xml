@@ -6,7 +6,7 @@
     android:orientation="vertical">
     
     <View
-        android:id="@+id/placeholder_banner"
+        android:id="@+id/shimmer_banner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/banner_image_height_home"
         android:background="@color/placeholder_gray"/>

@@ -5,6 +5,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/placeholder_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/banner_image_height_detail"
+            android:background="@color/placeholder_gray"/>
+
+        <View
+            android:layout_width="180dp"
+            android:layout_height="34dp"
+            android:layout_gravity="bottom"
+            android:background="@color/placeholder_dark_gray"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp"/>
+
+    </FrameLayout>
+
     <View
         android:layout_width="100dp"
         android:layout_height="24dp"

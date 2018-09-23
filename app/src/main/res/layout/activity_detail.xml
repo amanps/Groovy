@@ -5,9 +5,23 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.AppBarLayout
+    <include layout="@layout/error_screen"/>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:id="@+id/shimmer_layout"
+        app:shimmer_auto_start="true">
+
+        <include layout="@layout/placeholder_detail_activity"/>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
         
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
@@ -23,7 +37,7 @@
                 android:id="@+id/imageview_poster"
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
-                tools:src="@drawable/ic_launcher_background"
+                tools:src="@drawable/image_placeholder"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.5"/>
@@ -55,25 +69,15 @@
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
+        android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/shimmer_layout"
-            app:shimmer_auto_start="true">
-
-            <include layout="@layout/placeholder_detail_activity"/>
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="gone">
 
         <android.support.v4.widget.NestedScrollView
-            android:id="@+id/content_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"

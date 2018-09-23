@@ -13,6 +13,9 @@
     <string name="error_cast_unavailable">The cast isn\'t available right now. </string>
     <string name="error_recommendations_unavailable">Recommendations aren\'t available right now. </string>
     <string name="error_similar_programs_unavailable">Similar programs aren\'t available right now. </string>
+    <string name="error_try_again_button">Try Again</string>
+    <string name="error_that_didnt_work">Whoops, that didn\'t work.</string>
+    <string name="error_check_internet">Please check your internet connection.</string>
 
     <string name="program_rating">%1$s / 10</string>
     <string name="program_release_date">%1$s on %2$s</string>
