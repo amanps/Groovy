@@ -6,6 +6,7 @@ import com.amanps.groovy.data.DataManager
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BasePresenter
 import com.amanps.groovy.util.*
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
@@ -41,10 +42,11 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
         getHomePageDataSingle()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
+                .doOnSubscribe { view!!.displayLoading() }
                 .subscribe({
                     view!!.displayHomePageSections(it)
                 }, {
-                    Log.e(TAG, "Fetching home page data error.")
+                    view!!.displayError()
                 })
                 .let { compositeDisposable?.add(it) }
     }
@@ -62,12 +64,17 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
                 Function5<List<Program>, List<Program>, List<Program>, List<Program>, List<Program>, List<HomeListSectionModel>> {
 
                     popularMovies, popularTvShows, moviesInTheatres, upcomingMovies, bannerPrograms ->
-                    getSectionedPrograms(listOf(bannerPrograms,
+
+                    val compositeList = listOf(bannerPrograms,
                             popularMovies,
                             popularTvShows,
                             moviesInTheatres,
-                            upcomingMovies))
+                            upcomingMovies)
 
+                    if (compositeList.flatMap { it }.isEmpty()) {
+                        throw(Exception())
+                    }
+                    getSectionedPrograms(compositeList)
                 })
     }
 

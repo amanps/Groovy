@@ -15,6 +15,8 @@ import com.amanps.groovy.util.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.error_screen.*
+import kotlinx.android.synthetic.main.error_screen.view.*
 import kotlinx.android.synthetic.main.program_summary.*
 import kotlinx.android.synthetic.main.program_summary.view.*
 import kotlinx.android.synthetic.main.recyclerview_horizontal_sectioned.view.*
@@ -38,13 +40,21 @@ class DetailActivity : BaseActivity(), DetailView {
         programType = intent.getIntExtra(EXTRA_PROGRAM_TYPE, -1)
         val programTitle = intent.getStringExtra(EXTRA_PROGRAM_TITLE)
 
-        setupToolbar(programTitle)
+        setupView(programTitle, programId, programType)
 
         if (programId == -1 || programType == -1) {
             throw Exception("Extras to DetailActivity are malformed.")
         }
 
         detailPresenter.buildDetailsPage(programId, programType)
+    }
+
+    private fun setupView(programTitle: String, programId: Int, programType: Int) {
+        setupToolbar(programTitle)
+
+        error_layout.button_try_again.setOnClickListener {
+            detailPresenter.buildDetailsPage(programId, programType)
+        }
     }
 
     private fun setupToolbar(programTitle: String) {
@@ -56,6 +66,7 @@ class DetailActivity : BaseActivity(), DetailView {
     }
 
     override fun displayProgramDetails(program: Program) {
+        displayContent()
         Glide.with(this)
                 .load(NetworkUtils.getPosterImageUrl(program.backdrop_path ?: "", BACKDROP_IMAGE_SIZE))
                 .apply(RequestOptions()
@@ -121,7 +132,35 @@ class DetailActivity : BaseActivity(), DetailView {
     }
 
     override fun displayError(messageResId: Int) {
-        Log.d(TAG, getString(messageResId))
+        Log.e(TAG, getString(messageResId))
+        dismissShimmer()
+        error_layout.visibility = View.VISIBLE
+        content_layout.visibility = View.GONE
+        appbar_layout.visibility = View.GONE
+    }
+
+    override fun displayLoading() {
+        displayShimmer()
+        content_layout.visibility = View.GONE
+        appbar_layout.visibility = View.GONE
+        error_layout.visibility = View.GONE
+    }
+
+    private fun displayContent() {
+        dismissShimmer()
+        content_layout.visibility = View.VISIBLE
+        appbar_layout.visibility = View.VISIBLE
+        error_layout.visibility = View.GONE
+    }
+
+    private fun dismissShimmer() {
+        shimmer_layout.stopShimmer()
+        shimmer_layout.visibility = View.GONE
+    }
+
+    private fun displayShimmer() {
+        shimmer_layout.startShimmer()
+        shimmer_layout.visibility = View.VISIBLE
     }
 
     private fun handleCastClicked(cast: CastModel) {

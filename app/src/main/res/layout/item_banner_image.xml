@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="320dp"
+    android:layout_height="@dimen/banner_image_height_home"
     android:scaleType="fitStart"
     tools:src="@drawable/test_profile">
 

@@ -37,7 +37,7 @@
         android:id="@+id/release_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:textColor="@color/gray"
         android:fontFamily="sans-serif-bold"
         tools:text="Released May 23 2018"/>
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:textColor="@color/gray"
         android:fontFamily="sans-serif-bold"
         tools:text="Drama, Comedy, Action"/>

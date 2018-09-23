@@ -18,6 +18,7 @@ class DetailPresenter @Inject constructor() : BasePresenter<DetailView>() {
         dataManager.fetchProgramDetails(programId, programType)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
+                .doOnSubscribe { view!!.displayLoading() }
                 .subscribe({
                     view!!.displayProgramDetails(it)
                     buildDetailSections(programId, groovyProgramType)
