@@ -54,33 +54,51 @@
         
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <com.facebook.shimmer.ShimmerFrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:id="@+id/shimmer_layout"
+            app:shimmer_auto_start="true">
 
-            <include
-                layout="@layout/program_summary"/>
+            <include layout="@layout/placeholder_detail_activity"/>
 
-            <include
-                android:id="@+id/recyclerview_cast"
-                layout="@layout/recyclerview_horizontal_sectioned"/>
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
-            <include
-                android:id="@+id/recyclerview_similar"
-                layout="@layout/recyclerview_horizontal_sectioned"/>
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
-            <include
-                android:id="@+id/recyclerview_recommendations"
-                layout="@layout/recyclerview_horizontal_sectioned"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <include
+                    layout="@layout/program_summary"/>
 
-    </android.support.v4.widget.NestedScrollView>
+                <include
+                    android:id="@+id/recyclerview_cast"
+                    layout="@layout/recyclerview_horizontal_sectioned"/>
+
+                <include
+                    android:id="@+id/recyclerview_similar"
+                    layout="@layout/recyclerview_horizontal_sectioned"/>
+
+                <include
+                    android:id="@+id/recyclerview_recommendations"
+                    layout="@layout/recyclerview_horizontal_sectioned"/>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

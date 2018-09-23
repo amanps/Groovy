@@ -6,6 +6,8 @@ import com.amanps.groovy.ui.base.BaseView
 
 interface DetailView : BaseView {
 
+    fun displayLoading()
+
     fun displayProgramDetails(program: Program)
 
     fun displayError(messageResId: Int)

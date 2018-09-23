@@ -56,6 +56,8 @@ class DetailActivity : BaseActivity(), DetailView {
     }
 
     override fun displayProgramDetails(program: Program) {
+        dismissShimmer()
+        content_layout.visibility = View.VISIBLE
         Glide.with(this)
                 .load(NetworkUtils.getPosterImageUrl(program.backdrop_path ?: "", BACKDROP_IMAGE_SIZE))
                 .apply(RequestOptions()
@@ -130,6 +132,16 @@ class DetailActivity : BaseActivity(), DetailView {
 
     private fun handleProgramClicked(program: Program) {
         startActivity(DetailActivityIntent(program))
+    }
+
+    override fun displayLoading() {
+        shimmer_layout.visibility = View.VISIBLE
+        content_layout.visibility = View.GONE
+    }
+
+    private fun dismissShimmer() {
+        shimmer_layout.stopShimmer()
+        shimmer_layout.visibility = View.GONE
     }
 
 }
