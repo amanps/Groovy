@@ -44,6 +44,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.10.0"
 
     // Dagger 2
     implementation "com.google.dagger:dagger:$dagger2_version"
@@ -56,11 +58,11 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.1.15"
     implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
 
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:3.10.0"
-
+    // Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
+    // Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.3.0'
 
 }

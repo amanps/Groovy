@@ -10,4 +10,7 @@ interface HomeView : BaseView {
      */
     fun displayHomePageSections(sectionedPrograms: List<HomeListSectionModel>)
 
+    // Show the loading shimmer layout
+    fun showLoading()
+
 }

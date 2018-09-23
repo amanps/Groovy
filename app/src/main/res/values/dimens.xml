@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="banner_image_height_home">320dp</dimen>
+    <dimen name="banner_image_height_detail">300dp</dimen>
+    <dimen name="card_corner_radius">12dp</dimen>
+    <dimen name="card_image_width">100dp</dimen>
+    <dimen name="card_image_height">140dp</dimen>
+</resources>

@@ -3,6 +3,7 @@ package com.amanps.groovy.ui.home
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
 import com.amanps.groovy.R
 import com.amanps.groovy.data.model.Program
 import com.amanps.groovy.ui.base.BaseActivity
@@ -33,14 +34,26 @@ class HomeActivity : BaseActivity(), HomeView {
     }
 
     override fun displayHomePageSections(sectionedPrograms: List<HomeListSectionModel>) {
+        dimissShimmer()
         (recyclerview_home.adapter as HomeAdapter).apply {
             sections = sectionedPrograms.toMutableList()
             notifyDataSetChanged()
         }
+        recyclerview_home.visibility = View.VISIBLE
+    }
+
+    override fun showLoading() {
+        shimmer_layout.visibility = View.VISIBLE
+        recyclerview_home.visibility = View.GONE
     }
 
     private fun handleProgramClicked(program: Program) {
         startActivity(DetailActivityIntent(program))
+    }
+
+    private fun dimissShimmer() {
+        shimmer_layout.stopShimmer()
+        shimmer_layout.visibility = View.GONE
     }
 
     override fun onDestroy() {

@@ -41,6 +41,7 @@ class HomePresenter @Inject constructor() : BasePresenter<HomeView>() {
         getHomePageDataSingle()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
+                .doOnSubscribe { view!!.showLoading() }
                 .subscribe({
                     view!!.displayHomePageSections(it)
                 }, {
